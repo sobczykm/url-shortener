@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"sobczyk.dev/url-shortener/links"
@@ -10,6 +11,9 @@ import (
 
 func HandleGetLink(w http.ResponseWriter, r *http.Request) {
 	code := r.PathValue("code")
+
+	log.Printf("User requested: %s", r.URL.Path)
+
 	if link, exists := links.Links[code]; exists {
 		http.Redirect(w, r, link, http.StatusFound)
 	} else {
